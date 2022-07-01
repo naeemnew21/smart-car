@@ -1,12 +1,13 @@
 from operator import mod
 from pyexpat import model
+from unicodedata import name
 from django.db import models
 
 
-
+# ('full name', 'short name')
 VEHICLES = [
     ('V1', 'V1'),
-    ('V2', 'V3'),
+    ('V2', 'V2'),
     ('V3', 'V3'),
     ('V4', 'V4')
 ]
@@ -31,19 +32,21 @@ DIRS = [('R','R'),('L','L'),('S','S')]
 
 
 class Car_X(models.Model):
-    vehicle     = models.CharField(max_length=8, unique=True, choices= VEHICLES)
-    longitude   = models.DecimalField(max_digits=11, decimal_places=8)
-    latitude    = models.DecimalField(max_digits=10, decimal_places=8)
-    speed       = models.PositiveIntegerField()
-    direction   = models.CharField(max_length=1 , choices=DIRS)
-    time        = models.TimeField()
-    
-    path        = models.CharField(max_length=2 , choices=PATH)
-    distance    = models.PositiveIntegerField()
-    remain_time = models.TimeField()
+    vehicle       = models.CharField(max_length=8, unique=True, choices= VEHICLES)
+    latitude      = models.DecimalField(max_digits=10, decimal_places=8)
+    longitude     = models.DecimalField(max_digits=11, decimal_places=8)
+    speed         = models.PositiveIntegerField()
+    direction     = models.CharField(max_length=1 , choices=DIRS)
+    time          = models.TimeField(auto_now_add=True)
+      
+    path          = models.CharField(max_length=2 , choices=PATH)
+    distance      = models.PositiveIntegerField()
+    remain_time   = models.PositiveIntegerField() # time in seconds
+    expected_time = models.TimeField()
+    #order         = models.PositiveIntegerField() # to know position that car must stop moving
     
     def __str__(self):
-        return self.veichle
+        return self.vehicle
     
     
     
@@ -54,3 +57,27 @@ class Initial(models.Model):
     
     def __str__(self):
         return self.vehicle
+    
+    
+
+class Inter(models.Model):
+    name      = models.CharField(max_length=8, unique=True, default='TEST')
+    latc      = models.DecimalField(max_digits=11, decimal_places=8, default=0)
+    longc      = models.DecimalField(max_digits=11, decimal_places=8, default=0)
+    
+    lat1      = models.DecimalField(max_digits=11, decimal_places=8, default=0)
+    long1      = models.DecimalField(max_digits=11, decimal_places=8, default=0)
+    
+    lat2      = models.DecimalField(max_digits=11, decimal_places=8, default=0)
+    long2      = models.DecimalField(max_digits=11, decimal_places=8, default=0)
+    
+    lat3      = models.DecimalField(max_digits=11, decimal_places=8, default=0)
+    long3      = models.DecimalField(max_digits=11, decimal_places=8, default=0)
+    
+    lat4      = models.DecimalField(max_digits=11, decimal_places=8, default=0)
+    long4      = models.DecimalField(max_digits=11, decimal_places=8, default=0)
+    
+    def __str__(self):
+        return self.name
+    
+    

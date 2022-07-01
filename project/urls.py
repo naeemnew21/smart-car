@@ -23,7 +23,8 @@ from scar import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('get_action/', views.GetAction.as_view(), name = 'action'),
-    path('init/', views.Initialize_car.as_view(), name = 'init'),
+    path('init/', views.Initialize_Car.as_view(), name = 'init'),
+    path('inter/<str:name>', views.Initialize_Intersection.as_view(), name = 'inter'),
 ]
 
 
