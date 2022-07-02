@@ -32,7 +32,7 @@ DIRS = [('R','R'),('L','L'),('S','S')]
 
 
 class Car_X(models.Model):
-    vehicle       = models.CharField(max_length=8, unique=True, choices= VEHICLES)
+    vehicle       = models.CharField(max_length=8, unique=True)
     latitude      = models.DecimalField(max_digits=10, decimal_places=8)
     longitude     = models.DecimalField(max_digits=11, decimal_places=8)
     speed         = models.PositiveIntegerField()
@@ -44,6 +44,11 @@ class Car_X(models.Model):
     remain_time   = models.PositiveIntegerField() # time in seconds
     expected_time = models.TimeField()
     #order         = models.PositiveIntegerField() # to know position that car must stop moving
+    
+    action        = models.BooleanField(default = True) # True:run forward, False: stop
+    stop_lat      = models.DecimalField(max_digits=10, decimal_places=8, default=0)
+    stop_long     = models.DecimalField(max_digits=11, decimal_places=8, default=0)
+    waiting_time  = models.PositiveIntegerField(default = 0) # time in seconds
     
     def __str__(self):
         return self.vehicle
@@ -75,7 +80,11 @@ class Inter(models.Model):
     long3      = models.DecimalField(max_digits=11, decimal_places=8, default=0)
     
     lat4      = models.DecimalField(max_digits=11, decimal_places=8, default=0)
-    long4      = models.DecimalField(max_digits=11, decimal_places=8, default=0)
+    long4     = models.DecimalField(max_digits=11, decimal_places=8, default=0)
+    
+    X_TIME        =  models.PositiveIntegerField(default = 10) # time in seconds
+    SAFE_DISTANCE = models.PositiveIntegerField(default = 15) # in meters
+    DETECT_RANGE  = models.PositiveIntegerField(default = 50) # in meters
     
     def __str__(self):
         return self.name
