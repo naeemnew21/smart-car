@@ -294,11 +294,11 @@ class Initialize_Car(GenericAPIView):
                obj = Car_X.objects.filter(vehicle = vehicle)
                if obj.exists():
                    obj[0].delete()
-               return Response({'status':'fail'})
+               return Response({'status':'stop'})
            
 
 
-import time
+#import time
 
 class GetAction(GenericAPIView):
     serializer_class   = CarSerializer
@@ -321,9 +321,9 @@ class GetAction(GenericAPIView):
        if not(initialized(vehicle)) :
            return Response({'status':'fail-not initialized'})
        
-       point     = (float(serializer.data['latitude']), float(serializer.data['longitude']))
        direction = serializer.data['direction']
        speed     = serializer.data['speed']
+       
        path, ref = get_path(point, direction)
        
        data = extract_data(vehicle, point, direction, speed)
